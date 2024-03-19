@@ -14,14 +14,22 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 // console.log('PATH:' , path.join(__dirname, 'views'));
 
-app.get("/test", async (req, res) => {
+app.get("/", async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   await page.goto(
     "https://listverse.com/2024/03/14/ten-strange-but-true-geography-facts/"
   );
-
+  function cutStringFromEnd(str) {
+    let lastIndex = str.search(/[.?!]/);
+    let lastSquareBracketIndex = str.lastIndexOf('[');
+    if (lastIndex === -1 && lastSquareBracketIndex === -1) {
+      return str;
+    }
+    let finalIndex = Math.max(lastIndex, lastSquareBracketIndex);
+    return str.slice(0, finalIndex).trim();
+  }
   const fetchDetails = await page.evaluate(() => {
     const parentContent = document.querySelector(".single-article-only");
     const subContent = parentContent.querySelector("#articlecontentonly");

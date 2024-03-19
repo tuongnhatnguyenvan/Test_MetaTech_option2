@@ -51,7 +51,7 @@ app.get("/test", async (req, res) => {
         (tagP.tagName === "p" && tagP.classList === undefined)
       ) {
         if (tagP.textContent.length > 100) {
-          elementContents.array.push(tagP.outerHTML);
+          elementContents.array.push(tagP.textContent);
         } else {
           if (elementContents.array.length > 0) {
             elementContents.array.forEach((element) => {
